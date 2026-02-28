@@ -1,12 +1,44 @@
 .global _start
 .intel_syntax noprefix
 
+
+
+.section .bss
+
+buf_input:
+  .skip 8
+
+
+
+.section .rodata
+
+message:
+  .asciz "ECHO: "
+
+
+
+.section .text
+
 _start:
+  #read
+  mov rax, 0
+  mov rdi, 0
+  lea rsi, [buf_input]
+  mov rdx, 8
+  syscall
+
   # write
   mov rax, 1
   mov rdi, 1
   lea rsi, [message]
-  mov rdx, 4
+  mov rdx, 6
+  syscall
+
+  # write
+  mov rax, 1
+  mov rdi, 1
+  lea rsi, [buf_input]
+  mov rdx, 6
   syscall
 
   # exit
@@ -14,5 +46,3 @@ _start:
   mov rdi, 0
   syscall
 
-message:
-  .asciz "Hi!\n"
