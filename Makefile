@@ -6,7 +6,8 @@ $(objects): %.o: %.a
 	as $< -o $@
 
 fac: $(objects)
-	gcc $< -o $@ -nostdlib -static
+	ld $< -o $@ -static
+	# gcc $< -o $@ -nostdlib -static
 
 run: fac
 	./$<
