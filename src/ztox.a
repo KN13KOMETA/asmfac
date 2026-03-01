@@ -46,11 +46,14 @@ atoui:
     # overflow check
     cmp rdx, 0
     jne Latoui_loop_end
-    # copy result back to rbx
-    mov rbx, rax
 
     # add part to uint
-    add rbx, r10
+    add rax, r10
+    # overflow check
+    jc Latoui_loop_end
+
+    # copy result back to rbx
+    mov rbx, rax
     
     add rcx, 1
     jmp Latoui_loop_beg
