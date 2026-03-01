@@ -1,0 +1,9 @@
+# z to x - converter collection
+.intel_syntax noprefix
+
+uitoa:
+  ret
+
+atoui:
+  mov rax, 99
+  ret

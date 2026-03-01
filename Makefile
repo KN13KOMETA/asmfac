@@ -1,6 +1,6 @@
 .PHONY = run clean
 
-objects = src/fac.o
+objects = src/fac.o src/ztox.a
 
 $(objects): %.o: %.a
 	as $< -o $@
