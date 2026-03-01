@@ -13,6 +13,49 @@ uitoa:
 # rdi - base
 # rsi - buf
 # rdx - buf len
+# NOTE: base above 10 is cursed
 atoui:
-  mov rax, 99
+  # buf len
+  mov r8, rdx
+  # buf index
+  mov rcx, 0
+  # uint
+  mov rbx, 0
+  # max base
+  mov r9, '0'
+  add r9, rdi
+
+  Latoui_loop_beg:
+    cmp rcx, r8
+    je Latoui_loop_end
+    
+    # prepare next part
+    movzx r10, byte ptr [rsi + rcx]
+    # break if part less than '0' or greater than '0' + base
+    cmp r10, '0'
+    jb Latoui_loop_end
+    cmp r10, r9
+    jae Latoui_loop_end
+    # part to uint
+    sub r10, '0'
+
+    # mul uint by base
+    mov rdx, 0
+    mov rax, rbx
+    mul rdi
+    # overflow check
+    cmp rdx, 0
+    jne Latoui_loop_end
+    # copy result back to rbx
+    mov rbx, rax
+
+    # add part to uint
+    add rbx, r10
+    
+    add rcx, 1
+    jmp Latoui_loop_beg
+  Latoui_loop_end:
+
+  mov rax, rbx
+
   ret
