@@ -1,4 +1,4 @@
-.PHONY: run clean
+.PHONY: run clean freshrun
 
 objects = src/fac.o src/ztox.o
 
@@ -11,6 +11,8 @@ fac: $(objects)
 
 run: fac
 	./$<
+
+freshrun: clean run
 
 clean:
 	rm -f fac $(objects)
