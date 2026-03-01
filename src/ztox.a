@@ -1,9 +1,18 @@
 # z to x - converter collection
 .intel_syntax noprefix
 
+# uint to ascii
+# rdi - base
+# rsi - buf
+# rdx - buf len
+# r10 - uint
 uitoa:
   ret
 
+# ascii to uint
+# rdi - base
+# rsi - buf
+# rdx - buf len
 atoui:
   mov rax, 99
   ret
