@@ -83,6 +83,7 @@ write_fac_result:
 
   mov r14, rax
 
+  # error if buf_output len is 0
   cmp r14, 0
   je Lwrite_fac_result_err
     mov byte ptr [buf_output + r14], '\n'
