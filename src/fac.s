@@ -31,7 +31,12 @@ fac:
     # copy result back
     mov rsi, rax
 
+    # return if index == n
+    cmp rdi, rcx
+    je Lfac_end
+
     add rcx, 1
+    jmp Lfac_beg
   Lfac_end:
 
   mov rax, rsi
