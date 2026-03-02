@@ -69,6 +69,10 @@ prompt_user_input:
   ret
 
 write_fac_result:
+  # error if fac result is 0
+  cmp byte ptr [fac_result], 0
+  je Lwrite_fac_result_err
+
   # convert uint to ascii
   mov rdi, 10
   lea rsi, [buf_tmp]
