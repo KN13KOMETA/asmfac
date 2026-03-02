@@ -1,8 +1,8 @@
 .PHONY: run clean freshrun
 
-objects = src/fac.o src/ztox.o
+objects = src/start.o src/ztox.o
 
-$(objects): %.o: %.a
+$(objects): %.o: %.s
 	as $< -o $@
 
 fac: $(objects)

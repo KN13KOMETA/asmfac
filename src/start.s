@@ -1,7 +1,7 @@
 .global _start
 .intel_syntax noprefix
 
-.include "src/ztox.a"
+.include "src/ztox.s"
 
 
 
