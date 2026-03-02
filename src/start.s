@@ -16,6 +16,12 @@ fac_result:
 buf_input:
   .skip 8
 
+buf_tmp:
+  .skip 32
+
+buf_output:
+  .skip 32
+
 
 
 .section .rodata
@@ -23,6 +29,14 @@ buf_input:
 m_user_input:
   .ascii "Write positive int for calculating factorial: "
 m_user_input_len = . - m_user_input
+
+m_fac_result:
+  .ascii "Factorial result: "
+m_fac_result_len = . - m_fac_result
+
+m_fac_result_error:
+  .ascii "Error at calculating factorial.\n"
+m_fac_result_error_len = . - m_fac_result_error
 
 
 
@@ -53,11 +67,61 @@ prompt_user_input:
   mov [fac_input], rax
   ret
 
+write_fac_result:
+  # convert uint to ascii
+  mov rdi, 10
+  lea rsi, [buf_tmp]
+  lea rdx, [buf_output]
+  mov r10, 31
+  mov r8, [fac_result]
+  call uitoa
+
+  mov r14, rax
+
+  cmp r14, 0
+  je Lwrite_fac_result_err
+    mov byte ptr [buf_output + r14], '\n'
+
+    # write
+    mov rax, 1
+    mov rdi, 1
+    lea rsi, [m_fac_result]
+    mov rdx, m_fac_result_len
+    syscall
+
+    # write
+    mov rax, 1
+    mov rdi, 1
+    lea rsi, [buf_output]
+    mov rdx, r14
+    add rdx, 1
+    syscall
+
+    mov rax, 0
+    jmp Lwrite_fac_result_end
+  Lwrite_fac_result_err:
+    # write
+    mov rax, 1
+    mov rdi, 1
+    lea rsi, [m_fac_result_error]
+    mov rdx, m_fac_result_error_len
+    syscall
+    
+    mov rax, 1
+  Lwrite_fac_result_end:
+  ret
+
 _start:
   call prompt_user_input
 
+  mov rdx, [fac_input]
+  mov [fac_result], rdx
+
+  call write_fac_result
+  mov r15, rax
+
   # exit
   mov rax, 60
-  mov rdi, [fac_input]
+  mov rdi, r15
   syscall
 
