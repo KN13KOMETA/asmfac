@@ -2,6 +2,7 @@
 .intel_syntax noprefix
 
 .include "src/ztox.s"
+.include "src/fac.s"
 
 
 
@@ -114,8 +115,9 @@ write_fac_result:
 _start:
   call prompt_user_input
 
-  mov rdx, [fac_input]
-  mov [fac_result], rdx
+  mov rdi, [fac_input]
+  call fac
+  mov [fac_result], rax
 
   call write_fac_result
   mov r15, rax
