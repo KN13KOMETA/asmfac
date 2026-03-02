@@ -54,16 +54,3 @@ fac:
   mov rax, 2
   ret
 
-  # cmp rsi, rdi
-  #
-  # je Lend
-  #   add rsi, 1
-  #
-  #   mov rax, rsi
-  #   mul rdx
-  #   mov rdx, rax
-  #   call fac
-  #
-  # Lend:
-  # ret
-
