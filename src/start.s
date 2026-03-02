@@ -70,7 +70,7 @@ prompt_user_input:
 
 write_fac_result:
   # error if fac result is 0
-  cmp byte ptr [fac_result], 0
+  cmp qword ptr [fac_result], 0
   je Lwrite_fac_result_err
 
   # convert uint to ascii
